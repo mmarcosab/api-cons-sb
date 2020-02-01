@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <title>Lista de Pessoas</title>
+	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container">
+			<div id="listaDePessoas">
+	    		<table class="table table-hover">
+	        		<thead>
+	        			<tr>
+	        				<th>Código</th>
+				            <th>Nome</th>
+				            <th>Idade</th>
+				            <th>Remover</th>
+				        </tr>
+	        		</thead>
+			        <tr th:each="person : ${persons}">
+			            <td> <span th:text="${person.id}"></span> </td>
+			            <td> <span th:text="${person.name}"></span> </td>
+			            <td> <span th:text="${person.age}"></span> </td>
+			            <td> <form action="atualizar" method="post">
+                                <input type="hidden" id="idUpdate" name="idUpdate" th:value="${person.id}">
+                                <button type="submit" class="btn btn-primary">Atualizar</button>
+                            </form></td>
+                        <td><form action="deletar" method="post">
+                                <input type="hidden" id="idDelete" name="idDelete" th:value="${person.id}">
+                                <button type="submit" onclick="return confirm('Deseja realmente excluir?')" class="btn btn-danger">Deletar</button>
+                            </form> </td>
+			        </tr>  
+			    </table>
+			</div>
+		</div>
+		
+		<form action="getByName/{name}" method="post">
+            <div class="form-group col-md-6">
+                <label for="name">Nome</label> <input type="text" class="form-control" id="name" name="name"
+                    placeholder="Nome da pessoa para pesquisa" />
+            </div>
+            <div class="form-group col-md-3">
+				<button type="submit" class="btn btn-success">Pesquisar</button>
+			</div>
+		</form>
+	</body>
+</html>
